@@ -6,7 +6,7 @@ CREATE TYPE genero_cancion_enum AS ENUM ('rock', 'pop', 'jazz', 'reggae', 'trap'
 
 -- Dominio del precio plan
 CREATE DOMAIN precio_plan AS integer
-CHECK (VALUE > 2500);
+CHECK (VALUE >= 2500);
 
 --duracion_plan modificar su dominio
 CREATE TABLE planes_subscripcion (
@@ -48,8 +48,8 @@ CREATE TABLE usuarios (
 --Creacion Tabla pagos
 CREATE TABLE pagos (
     numero_pago SERIAL NOT NULL,
-    nombre_usuario VARCHAR(32) NOT NULL,
-    nombre_plan VARCHAR(32) NOT NULL,
+    nombre_usuario VARCHAR(32),
+    nombre_plan VARCHAR(32),
     forma_pago forma_pago_enum NOT NULL,
     fecha_pago DATE NOT NULL DEFAULT CURRENT_DATE,
     monto precio_plan NOT NULL DEFAULT 2500,
@@ -71,7 +71,7 @@ CREATE TABLE artistas (
 
 CREATE TABLE canciones (
     id_cancion SERIAL,
-    nombre_cancion VARCHAR(32),
+    nombre_cancion VARCHAR(32) NOT NULL,
     duracion_cancion INT CHECK (duracion_cancion > 0) NOT NULL, -- Duracion en segundos
     genero_cancion genero_cancion_enum NOT NULL,
     PRIMARY KEY (id_cancion)
@@ -80,7 +80,7 @@ CREATE TABLE canciones (
 --Creacion Tabla albumes
 CREATE TABLE albumes ( 
     id_album SERIAL,
-    nombre_artista VARCHAR(32) NOT NULL,
+    nombre_artista VARCHAR(32),
     nombre_album VARCHAR(32) NOT NULL,
     fecha_lanzamiento DATE NOT NULL,
     PRIMARY KEY (id_album),
@@ -90,7 +90,7 @@ CREATE TABLE albumes (
 --Creacion Albumes_Canciones
 CREATE TABLE albumes_canciones (
     id_cancion INT,
-    id_album INT NOT NULL, 
+    id_album INT, 
     PRIMARY KEY (id_cancion),
     FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion),
     FOREIGN KEY (id_album) REFERENCES albumes(id_album)
@@ -125,8 +125,8 @@ CREATE TABLE artistas_guardados (
 
 --Creacion Canciones_Guardadas (esta tabla es igual a reproducciones_usuarios)
 CREATE TABLE canciones_guardadas (
-    nombre_usuario VARCHAR(32) NOT NULL,
-    id_cancion INT NOT NULL,
+    nombre_usuario VARCHAR(32),
+    id_cancion INT,
     PRIMARY KEY (nombre_usuario, id_cancion),
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
     FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)

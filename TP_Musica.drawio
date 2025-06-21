@@ -102,13 +102,6 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="mMfBTUr490yaLEW3pHv7-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ZIxAhvAk8yuxsASHKUe0-19" target="C6MgCTJuLpwP4u7vqyZL-10">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="140" y="895" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
         <mxCell id="ZIxAhvAk8yuxsASHKUe0-19" value="PLAN SUBSCRIPCION" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="24" y="747.02" width="130" height="50" as="geometry" />
         </mxCell>
@@ -256,8 +249,8 @@
         <mxCell id="c833CRv7a0KJ4lnG7vxt-23" value="(0,N)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-280" y="411.26" width="50" height="28.74" as="geometry" />
         </mxCell>
-        <mxCell id="c833CRv7a0KJ4lnG7vxt-27" value="precio_plan" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="272" y="960" width="110" height="30" as="geometry" />
+        <mxCell id="c833CRv7a0KJ4lnG7vxt-27" value="precio" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="272" y="950" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="c833CRv7a0KJ4lnG7vxt-39" value="&lt;u&gt;nombre_artista&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-655" y="407.5" width="115" height="32.5" as="geometry" />
@@ -444,14 +437,8 @@
         <mxCell id="C6MgCTJuLpwP4u7vqyZL-8" value="&lt;p style=&quot;margin-top: 0px;&quot;&gt;La otra opción era quitar la relacion tiene y aplicarle al usuario al registrarlo un pago con monto $0.00 correspondiente al plan gratuito&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="310" y="386.78999999999996" width="180" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="C6MgCTJuLpwP4u7vqyZL-10" value="&lt;u&gt;duración_plan&lt;/u&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="162" y="880" width="110" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="C6MgCTJuLpwP4u7vqyZL-14" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Nota&lt;/h1&gt;&lt;p&gt;Tanto &lt;i&gt;nombre_plan&lt;/i&gt;&amp;nbsp;como &lt;i&gt;duracion_plan &lt;/i&gt;son claves primarias, esto permite tener planes con el mismo nombre y distinta duración.&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="330" y="712.02" width="180" height="120" as="geometry" />
-        </mxCell>
-        <mxCell id="C6MgCTJuLpwP4u7vqyZL-17" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Nota&lt;/h1&gt;&lt;p&gt;Para el caso del plan gratuito cuya duración es virtualmente infinita se le asignó el valor &lt;i&gt;infinito&lt;/i&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="420" y="842.5" width="180" height="120" as="geometry" />
+        <mxCell id="C6MgCTJuLpwP4u7vqyZL-10" value="duración_plan" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="272" y="990" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="C6MgCTJuLpwP4u7vqyZL-21" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Nota&lt;/h1&gt;&lt;p&gt;&lt;i&gt;genero_cancion&amp;nbsp;&lt;/i&gt;es un tipo de dato creado por nosotros lo cual nos permite restringir el dominio a un conjunto de valores que tengan sentido para la aplicación.&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-770" y="805" width="180" height="140" as="geometry" />
@@ -504,13 +491,21 @@
           <mxGeometry x="49" y="820" width="80" height="60" as="geometry" />
         </mxCell>
         <mxCell id="mMfBTUr490yaLEW3pHv7-2" value="PLAN_GRATUITO" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="-70" y="950" width="130" height="50" as="geometry" />
+          <mxGeometry x="-70" y="940" width="130" height="50" as="geometry" />
         </mxCell>
         <mxCell id="mMfBTUr490yaLEW3pHv7-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mMfBTUr490yaLEW3pHv7-3" target="c833CRv7a0KJ4lnG7vxt-27">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="mMfBTUr490yaLEW3pHv7-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="mMfBTUr490yaLEW3pHv7-3" target="C6MgCTJuLpwP4u7vqyZL-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="965" />
+              <mxPoint x="260" y="1005" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="mMfBTUr490yaLEW3pHv7-3" value="PLAN_PAGO" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="120" y="950" width="130" height="50" as="geometry" />
+          <mxGeometry x="120" y="940" width="130" height="50" as="geometry" />
         </mxCell>
         <mxCell id="mMfBTUr490yaLEW3pHv7-14" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Nota&lt;/h1&gt;&lt;p&gt;Quisimos prescindir de la generalizacion pero dado a que el enunciado pone una restriccion de dominio sobre el precio invalidando el valor 0 no pudimos hacer que un plan gratuito tenga un precio cero (es decir que comparta el atributo &lt;i&gt;precio_plan&lt;/i&gt;).&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="49" y="1020" width="180" height="190" as="geometry" />

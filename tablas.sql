@@ -4,7 +4,7 @@ SET search_path TO "aplicacion_musica";
 CREATE TYPE forma_pago_enum AS ENUM ('efectivo', 'tarjeta', 'transferencia');
 CREATE TYPE genero_cancion_enum AS ENUM ('rock', 'pop', 'jazz', 'reggae', 'trap', 'indie', 'cumbia');
 
-CREATE TABLE planes_subscripcion (
+CREATE TABLE IF NOT EXISTS planes_subscripcion (
     nombre_plan VARCHAR(32),
     descripcion_plan VARCHAR(64) NOT NULL,
     duracion_plan INT NOT NULL DEFAULT 36500,  
@@ -19,31 +19,32 @@ CREATE TABLE planes_subscripcion (
 );
 
 --Creacion Tabla usuarios
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     nombre_usuario VARCHAR(32),
     email VARCHAR(64) UNIQUE NOT NULL,
     fecha_de_registro DATE NOT NULL DEFAULT CURRENT_DATE,
-    nombre_plan VARCHAR(32) NOT NULL, --DEFAULT Gratuito,
+    nombre_plan VARCHAR(32) NOT NULL DEFAULT 'Gratuito',
     PRIMARY KEY (nombre_usuario),
-    CONSTRAINT fk_usuarios_plan FOREIGN KEY (nombre_plan) REFERENCES planes_subscripcion(nombre_plan) 
+    CONSTRAINT fk_usuario_plan FOREIGN KEY (nombre_plan) REFERENCES planes_subscripcion(nombre_plan) 
     ON DELETE SET DEFAULT
     ON UPDATE CASCADE
 );
 
 --Creacion Tabla pagos
-CREATE TABLE pagos (
+CREATE TABLE IF NOT EXISTS pagos (
     numero_pago SERIAL NOT NULL,
     nombre_usuario VARCHAR(32),
     nombre_plan VARCHAR(32),
     forma_pago forma_pago_enum NOT NULL,
     precio_plan NUMERIC(10,2) NOT NULL,
+    fecha_pago DATE NOT NULL DEFAULT CURRENT_DATE,
     PRIMARY KEY (numero_pago),
-    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
-    FOREIGN KEY (nombre_plan) REFERENCES planes_subscripcion(nombre_plan)
+    CONSTRAINT fk_nombre_usuario FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE
 );
 
 --Creacion Tabla artistas
-CREATE TABLE artistas ( 
+CREATE TABLE IF NOT EXISTS artistas ( 
     nombre_artista VARCHAR(32),
     tipo_artista VARCHAR(32) NOT NULL CHECK (tipo_artista IN ('solista', 'banda')),
     pais VARCHAR(32) NOT NULL,
@@ -53,7 +54,7 @@ CREATE TABLE artistas (
 --Creacion Tabla canciones
 --Cuidado con INTERVAL Porque aca en vs no lo toma como dominio pero supuestamente es un dominio
 
-CREATE TABLE canciones (
+CREATE TABLE IF NOT EXISTS canciones (
     id_cancion SERIAL,
     nombre_cancion VARCHAR(32) NOT NULL,
     duracion_cancion INT CHECK (duracion_cancion > 0) NOT NULL, -- Duracion en segundos
@@ -62,67 +63,90 @@ CREATE TABLE canciones (
 );
 
 --Creacion Tabla albumes
-CREATE TABLE albumes ( 
+CREATE TABLE IF NOT EXISTS albumes ( 
     id_album SERIAL,
     nombre_artista VARCHAR(32),
     nombre_album VARCHAR(32) NOT NULL,
     fecha_lanzamiento DATE NOT NULL,
     PRIMARY KEY (id_album),
-    FOREIGN KEY (nombre_artista) REFERENCES artistas(nombre_artista)
+    CONSTRAINT fk_nombre_artista FOREIGN KEY (nombre_artista) REFERENCES artistas(nombre_artista)
+    ON DELETE CASCADE
 );
 
 --Creacion Albumes_Canciones
-CREATE TABLE albumes_canciones (
+CREATE TABLE IF NOT EXISTS albumes_canciones (
     id_cancion INT,
     id_album INT, 
     PRIMARY KEY (id_cancion),
-    FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion),
-    FOREIGN KEY (id_album) REFERENCES albumes(id_album)
+    CONSTRAINT fk_id_cancion FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)
+    ON DELETE CASCADE,
+    CONSTRAINT fk_id_album FOREIGN KEY (id_album) REFERENCES albumes(id_album)
+    ON DELETE CASCADE
 );
 
 --Creacion Canciones_Artistas
-CREATE TABLE canciones_artistas (
+CREATE TABLE IF NOT EXISTS canciones_artistas (
     id_cancion INT,
     nombre_artista VARCHAR(32),
     PRIMARY KEY (id_cancion, nombre_artista),
-    FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion),
-    FOREIGN KEY (nombre_artista) REFERENCES artistas(nombre_artista)
+    CONSTRAINT fk_id_cancion FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT fk_nombre_artista FOREIGN KEY (nombre_artista) REFERENCES artistas(nombre_artista)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 --Creacion Reproducciones_Usuarios 
-CREATE TABLE reproducciones_usuarios (
+CREATE TABLE IF NOT EXISTS reproducciones_usuarios (
     nombre_usuario VARCHAR(32),
     id_cancion INT,
     PRIMARY KEY (nombre_usuario, id_cancion),
-    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
-    FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)
+    CONSTRAINT fk_nombre_usuario FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT fk_id_cancion FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 --Creacion Artistas_Guardados 
-CREATE TABLE artistas_guardados (
+CREATE TABLE IF NOT EXISTS artistas_guardados (
     nombre_usuario VARCHAR(32),
     nombre_artista VARCHAR(32),
     PRIMARY KEY (nombre_usuario, nombre_artista),
-    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
-    FOREIGN KEY (nombre_artista) REFERENCES artistas(nombre_artista)
+    CONSTRAINT fk_nombre_usuario FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT fk_nombre_artista FOREIGN KEY (nombre_artista) REFERENCES artistas(nombre_artista)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 --Creacion Canciones_Guardadas (esta tabla es igual a reproducciones_usuarios)
-CREATE TABLE canciones_guardadas (
+CREATE TABLE IF NOT EXISTS canciones_guardadas (
     nombre_usuario VARCHAR(32),
     id_cancion INT,
     PRIMARY KEY (nombre_usuario, id_cancion),
-    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
-    FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)
+    CONSTRAINT fk_nombre_usuario FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT fk_id_cancion FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 --Creacion Albumes_Guardados
-CREATE TABLE albumes_guardados (
+CREATE TABLE IF NOT EXISTS albumes_guardados (
     nombre_usuario VARCHAR(32),
     id_album INT,
     PRIMARY KEY (nombre_usuario, id_album),
-    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
-    FOREIGN KEY (id_album) REFERENCES albumes(id_album)
+    CONSTRAINT fk_nombre_usuario FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT fk_id_album FOREIGN KEY (id_album) REFERENCES albumes(id_album)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 -- 1) (Re)Crear la función, calificando también la tabla de planes
@@ -138,7 +162,6 @@ BEGIN
 
   RETURN NEW;
 END;
-$$;
 
 -- 3) Crear el trigger en el esquema correcto
 CREATE TRIGGER before_pagos_insert

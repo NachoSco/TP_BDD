@@ -35,10 +35,7 @@ CREATE TABLE pagos (
     numero_pago SERIAL NOT NULL,
     nombre_usuario VARCHAR(32),
     nombre_plan VARCHAR(32),
-    nombre_usuario VARCHAR(32),
-    nombre_plan VARCHAR(32),
     forma_pago forma_pago_enum NOT NULL,
-    fecha_pago DATE NOT NULL DEFAULT CURRENT_DATE,
     precio_plan NUMERIC(10,2) NOT NULL,
     PRIMARY KEY (numero_pago),
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
@@ -59,7 +56,6 @@ CREATE TABLE artistas (
 CREATE TABLE canciones (
     id_cancion SERIAL,
     nombre_cancion VARCHAR(32) NOT NULL,
-    nombre_cancion VARCHAR(32) NOT NULL,
     duracion_cancion INT CHECK (duracion_cancion > 0) NOT NULL, -- Duracion en segundos
     genero_cancion genero_cancion_enum NOT NULL,
     PRIMARY KEY (id_cancion)
@@ -68,7 +64,6 @@ CREATE TABLE canciones (
 --Creacion Tabla albumes
 CREATE TABLE albumes ( 
     id_album SERIAL,
-    nombre_artista VARCHAR(32),
     nombre_artista VARCHAR(32),
     nombre_album VARCHAR(32) NOT NULL,
     fecha_lanzamiento DATE NOT NULL,
@@ -79,7 +74,6 @@ CREATE TABLE albumes (
 --Creacion Albumes_Canciones
 CREATE TABLE albumes_canciones (
     id_cancion INT,
-    id_album INT, 
     id_album INT, 
     PRIMARY KEY (id_cancion),
     FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion),
@@ -115,8 +109,6 @@ CREATE TABLE artistas_guardados (
 
 --Creacion Canciones_Guardadas (esta tabla es igual a reproducciones_usuarios)
 CREATE TABLE canciones_guardadas (
-    nombre_usuario VARCHAR(32),
-    id_cancion INT,
     nombre_usuario VARCHAR(32),
     id_cancion INT,
     PRIMARY KEY (nombre_usuario, id_cancion),

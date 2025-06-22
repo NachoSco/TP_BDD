@@ -1,36 +1,21 @@
---Creacion de Esquema
 CREATE SCHEMA aplicacion_musica; -- CREATE SCHEMA aplicacion_musica AUTHORIZATION postgres;
+SET search_path TO "aplicacion_musica";
 
 CREATE TYPE forma_pago_enum AS ENUM ('efectivo', 'tarjeta', 'transferencia');
 CREATE TYPE genero_cancion_enum AS ENUM ('rock', 'pop', 'jazz', 'reggae', 'trap', 'indie', 'cumbia');
 
--- Dominio del precio plan
-CREATE DOMAIN precio_plan AS integer
-CHECK (VALUE > 2500);
-
---duracion_plan modificar su dominio
 CREATE TABLE planes_subscripcion (
     nombre_plan VARCHAR(32),
-    descripcion_plan VARCHAR(64) NOT NULL, 
-    PRIMARY KEY (nombre_plan, duracion_plan)
-);
-
-CREATE TABLE planes_gratuitos (
-    nombre_plan VARCHAR(32),
-    descripcion_plan VARCHAR(64) NOT NULL, 
-    PRIMARY KEY (nombre_plan, duracion_plan),
-    FOREIGN KEY (nombre_plan) REFERENCES planes_subscripcion(nombre_plan),
-    FOREIGN KEY (descripcion_plan) REFERENCES planes_subscripcion(descripcion_plan)
-);
-
-CREATE TABLE planes_pagos (
-    nombre_plan VARCHAR(32),
-    duracion_plan INT CHECK(duracion_plan > 0),
-    descripcion_plan VARCHAR(64) NOT NULL, 
-    precio precio_plan NOT NULL, 
-    PRIMARY KEY (nombre_plan, duracion_plan),
-    FOREIGN KEY (nombre_plan) REFERENCES planes_subscripcion(nombre_plan),
-    FOREIGN KEY (descripcion_plan) REFERENCES planes_subscripcion(descripcion_plan)
+    descripcion_plan VARCHAR(64) NOT NULL,
+    duracion_plan INT NOT NULL DEFAULT 36500,  
+    es_pago BOOLEAN NOT NULL DEFAULT false,
+	precio NUMERIC(10,2) NOT NULL, 
+    PRIMARY KEY (nombre_plan),
+	CONSTRAINT chk_precio_pago_total
+  	CHECK (
+    	(es_pago = TRUE  AND precio > 2000)
+ 		OR (es_pago = FALSE AND precio = 0)
+	)
 );
 
 --Creacion Tabla usuarios
@@ -38,9 +23,9 @@ CREATE TABLE usuarios (
     nombre_usuario VARCHAR(32),
     email VARCHAR(64) UNIQUE NOT NULL,
     fecha_de_registro DATE NOT NULL DEFAULT CURRENT_DATE,
-    nombre_plan VARCHAR(32) NOT NULL DEFAULT "Gratuito",
+    nombre_plan VARCHAR(32) NOT NULL, --DEFAULT Gratuito,
     PRIMARY KEY (nombre_usuario),
-    CONSTRAINT FOREIGN KEY (nombre_plan, duracion_plan) REFERENCES planes_subscripcion(nombre_plan, duracion_plan) 
+    CONSTRAINT fk_usuarios_plan FOREIGN KEY (nombre_plan) REFERENCES planes_subscripcion(nombre_plan) 
     ON DELETE SET DEFAULT
     ON UPDATE CASCADE
 );
@@ -48,20 +33,20 @@ CREATE TABLE usuarios (
 --Creacion Tabla pagos
 CREATE TABLE pagos (
     numero_pago SERIAL NOT NULL,
-    nombre_usuario VARCHAR(32) NOT NULL,
-    nombre_plan VARCHAR(32) NOT NULL,
+    nombre_usuario VARCHAR(32),
+    nombre_plan VARCHAR(32),
     forma_pago forma_pago_enum NOT NULL,
     fecha_pago DATE NOT NULL DEFAULT CURRENT_DATE,
-    monto precio_plan NOT NULL DEFAULT 2500,
+    precio_plan NUMERIC(10,2) NOT NULL,
     PRIMARY KEY (numero_pago),
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
-    FOREIGN KEY (nombre_plan, duracion_plan) REFERENCES planes_subscripcion(nombre_plan, duracion_plan)
+    FOREIGN KEY (nombre_plan) REFERENCES planes_subscripcion(nombre_plan)
 );
 
 --Creacion Tabla artistas
 CREATE TABLE artistas ( 
     nombre_artista VARCHAR(32),
-    tipo_artista VARCHAR(32) NOT NULL CHECK tipo_artista IN ('solista', 'banda'),
+    tipo_artista VARCHAR(32) NOT NULL CHECK (tipo_artista IN ('solista', 'banda')),
     pais VARCHAR(32) NOT NULL,
     PRIMARY KEY (nombre_artista)
 );
@@ -71,7 +56,7 @@ CREATE TABLE artistas (
 
 CREATE TABLE canciones (
     id_cancion SERIAL,
-    nombre_cancion VARCHAR(32),
+    nombre_cancion VARCHAR(32) NOT NULL,
     duracion_cancion INT CHECK (duracion_cancion > 0) NOT NULL, -- Duracion en segundos
     genero_cancion genero_cancion_enum NOT NULL,
     PRIMARY KEY (id_cancion)
@@ -80,7 +65,7 @@ CREATE TABLE canciones (
 --Creacion Tabla albumes
 CREATE TABLE albumes ( 
     id_album SERIAL,
-    nombre_artista VARCHAR(32) NOT NULL,
+    nombre_artista VARCHAR(32),
     nombre_album VARCHAR(32) NOT NULL,
     fecha_lanzamiento DATE NOT NULL,
     PRIMARY KEY (id_album),
@@ -90,7 +75,7 @@ CREATE TABLE albumes (
 --Creacion Albumes_Canciones
 CREATE TABLE albumes_canciones (
     id_cancion INT,
-    id_album INT NOT NULL, 
+    id_album INT, 
     PRIMARY KEY (id_cancion),
     FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion),
     FOREIGN KEY (id_album) REFERENCES albumes(id_album)
@@ -125,8 +110,8 @@ CREATE TABLE artistas_guardados (
 
 --Creacion Canciones_Guardadas (esta tabla es igual a reproducciones_usuarios)
 CREATE TABLE canciones_guardadas (
-    nombre_usuario VARCHAR(32) NOT NULL,
-    id_cancion INT NOT NULL,
+    nombre_usuario VARCHAR(32),
+    id_cancion INT,
     PRIMARY KEY (nombre_usuario, id_cancion),
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
     FOREIGN KEY (id_cancion) REFERENCES canciones(id_cancion)
@@ -140,3 +125,24 @@ CREATE TABLE albumes_guardados (
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario),
     FOREIGN KEY (id_album) REFERENCES albumes(id_album)
 );
+
+-- 1) (Re)Crear la función, calificando también la tabla de planes
+CREATE OR REPLACE FUNCTION aplicacion_musica.trg_set_precio_plan()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  SELECT precio
+    INTO NEW.precio_plan
+  FROM aplicacion_musica.planes_subscripcion ap
+  WHERE ap.nombre_plan = NEW.nombre_plan;
+
+  RETURN NEW;
+END;
+$$;
+
+-- 3) Crear el trigger en el esquema correcto
+CREATE TRIGGER before_pagos_insert
+  BEFORE INSERT OR UPDATE ON aplicacion_musica.pagos
+  FOR EACH ROW
+  EXECUTE FUNCTION aplicacion_musica.trg_set_precio_plan();

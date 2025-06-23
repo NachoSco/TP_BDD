@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS albumes (
     PRIMARY KEY (id_album),
     CONSTRAINT fk_nombre_artista FOREIGN KEY (nombre_artista) REFERENCES artistas(nombre_artista)
     ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 --Creacion Albumes_Canciones

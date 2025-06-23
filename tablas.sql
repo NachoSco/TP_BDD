@@ -2,7 +2,16 @@ CREATE SCHEMA aplicacion_musica; -- CREATE SCHEMA aplicacion_musica AUTHORIZATIO
 SET search_path TO "aplicacion_musica";
 
 CREATE TYPE forma_pago_enum AS ENUM ('efectivo', 'tarjeta', 'transferencia');
-CREATE TYPE genero_cancion_enum AS ENUM ('rock', 'pop', 'jazz', 'reggae', 'trap', 'indie', 'cumbia');
+CREATE TYPE genero_cancion_enum AS ENUM (
+    'rock',
+    'pop',
+    'rock alternativo',
+    'reguetón',
+    'flamenco urbano',
+    'rock psicodélico',
+    'pop latino',
+    'indie rock'
+);
 
 CREATE TABLE IF NOT EXISTS planes_subscripcion (
     nombre_plan VARCHAR(32),

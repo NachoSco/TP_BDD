@@ -1,1 +1,1 @@
-SELECT * FROM artistas;
+SELECT * FROM aplicacion_musica.artistas;

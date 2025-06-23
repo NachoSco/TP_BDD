@@ -1,1 +1,1 @@
-SELECT * FROM albumes GROUP BY nombre_artista
+SELECT * FROM albumes GROUP BY nombre_artista;

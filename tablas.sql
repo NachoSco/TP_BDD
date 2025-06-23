@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS canciones_artistas (
 CREATE TABLE IF NOT EXISTS reproducciones_usuarios (
     nombre_usuario VARCHAR(32),
     id_cancion INT,
+    cantidad_reproducciones INT DEFAULT 1,
     PRIMARY KEY (nombre_usuario, id_cancion),
     CONSTRAINT fk_nombre_usuario FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
     ON DELETE CASCADE

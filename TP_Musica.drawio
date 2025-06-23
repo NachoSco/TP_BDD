@@ -394,6 +394,11 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="VneHgVkFO9W9uhNeLSh4-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;startFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ahxiHzl4CDc5EQUgLDPp-34">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-360" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="ahxiHzl4CDc5EQUgLDPp-34" value="ESCUCHA" style="rhombus;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-400" y="290" width="80" height="80" as="geometry" />
         </mxCell>
@@ -470,6 +475,9 @@
         </mxCell>
         <mxCell id="tf4CY3f1EDur14EpyR60-3" value="es_pago" style="ellipse;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="159" y="920" width="116" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="VneHgVkFO9W9uhNeLSh4-2" value="cantidad_reproducciones" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-440" y="241.4" width="170" height="24.85" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

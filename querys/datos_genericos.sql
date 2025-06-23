@@ -1,12 +1,10 @@
 SET search_path TO aplicacion_musica;
 
--- 1. Planes de subscripción (originales + 0 nuevos = 3 total)
 INSERT INTO planes_subscripcion (nombre_plan, descripcion_plan, duracion_plan, es_pago, precio) VALUES
 ('Gratuito', 'Plan gratuito con publicidad', 36500, false, 0),
 ('Premium', 'Plan sin publicidad con calidad HD', 365, true, 3500),
 ('Familiar', 'Hasta 5 cuentas', 365, true, 8000);
 
--- 2. Usuarios (3 originales + 7 nuevos = 10 total)
 INSERT INTO usuarios (nombre_usuario, email, fecha_de_registro, nombre_plan) VALUES
 ('lucas123', 'lucas@gmail.com', '2024-11-05', 'Gratuito'),
 ('vale_rock', 'valen@yahoo.com', '2025-01-22', 'Premium'),
@@ -24,7 +22,6 @@ INSERT INTO usuarios (nombre_usuario, email, fecha_de_registro, nombre_plan) VAL
 ('jazzfan', 'jazzfan@gmail.com', '2025-05-30', 'Premium'),
 ('indiequeen', 'indieq@hotmail.com', '2025-06-10', 'Familiar');
 
--- 3. Artistas (3 originales + 5 nuevos = 8 total)
 INSERT INTO artistas (nombre_artista, tipo_artista, pais) VALUES
 ('Los Piojos', 'banda', 'Argentina'),
 ('B Eilish', 'solista', 'EEUU'),
@@ -45,7 +42,6 @@ INSERT INTO artistas (nombre_artista, tipo_artista, pais) VALUES
 ('Nirvana', 'banda', 'EEUU'),
 ('Shakira', 'solista', 'Colombia');
 
--- 4. Canciones (3 originales + 10 nuevas = 13 total)
 INSERT INTO canciones (nombre_cancion, duracion_cancion, genero_cancion) VALUES
 ('Forgiveness', 360, 'rock'),
 ('Bad Guy', 194, 'pop'),
@@ -91,7 +87,6 @@ INSERT INTO canciones (nombre_cancion, duracion_cancion, genero_cancion) VALUES
 ('Beach', 178, 'pop'),
 ('Bored', 203, 'pop');
 
--- 5. Álbumes (3 originales + 7 nuevos = 10 total)
 INSERT INTO albumes (nombre_artista, nombre_album, fecha_lanzamiento) VALUES
 ('Tame Impala', 'Slow Rush', '2020-02-14'),
 ('B Eilish', 'When We Sleep', '2019-03-29'),
@@ -119,21 +114,20 @@ INSERT INTO albumes (nombre_artista, nombre_album, fecha_lanzamiento) VALUES
 ('Tame Impala', 'Lonerism', '2012-10-05'),
 ('B Eilish', 'Dont Smile at Me', '2017-08-11');
 
--- 6. Álbumes-Canciones (3 originales + 10 nuevas = 13 total)
 INSERT INTO albumes_canciones (id_cancion, id_album) VALUES
-(1, 1),  -- Forgiveness -> Slow Rush
-(2, 2),  -- Bad Guy -> When We Sleep
-(3, 3),  -- Tan Solo -> 3er Arco
-(4, 4),  -- De Música Ligera -> Canción Animal
-(5, 5),  -- Levitating -> Future Nostalgia
-(6, 6),  -- Do I Wanna Know? -> AM
-(7, 7),  -- Mi Gente -> Vibras
-(8, 8),  -- Malamente -> El Mal Querer
-(9, 3),  -- Verte -> 3er Arco (Los Piojos)
-(10, 9), -- Electric Feel -> Currents (Tame Impala)
-(11, 2), -- Ocean Eyes -> When We Sleep (B Eilish)
-(12, 5), -- Mariposa -> Future Nostalgia (Dua Lipa)
-(13, 6), -- 505 -> AM (Arctic Monkeys)
+(1, 1),  
+(2, 2),  
+(3, 3),  
+(4, 4),  
+(5, 5),  
+(6, 6),  
+(7, 7),  
+(8, 8),  
+(9, 3),  
+(10, 9), 
+(11, 2), 
+(12, 5), 
+(13, 6), 
 (14, 11),
 (15, 12),
 (16, 13),
@@ -165,7 +159,6 @@ INSERT INTO albumes_canciones (id_cancion, id_album) VALUES
 (42, 24),
 (43, 25);
 
--- 7. Canciones-Artistas (3 originales + 10 nuevas = 13 total)
 INSERT INTO canciones_artistas (id_cancion, nombre_artista) VALUES
 (1, 'Tame Impala'),
 (2, 'B Eilish'),
@@ -211,22 +204,20 @@ INSERT INTO canciones_artistas (id_cancion, nombre_artista) VALUES
 (42, 'Tame Impala'),
 (43, 'B Eilish');
 
--- 8. Pagos (2 originales + 5 nuevos = 7 total)
 INSERT INTO pagos (nombre_usuario, nombre_plan, forma_pago) VALUES
-('vale_rock', 'Premium', 'tarjeta'),
+('vale_rock', 'Premium', 'debito'),
 ('juanpop', 'Familiar', 'transferencia'),
-('sofia_music', 'Premium', 'tarjeta'),
-('ana_sound', 'Familiar', 'tarjeta'),
+('sofia_music', 'Premium', 'credito'),
+('ana_sound', 'Familiar', 'credito'),
 ('mario_jazz', 'Premium', 'transferencia'),
-('laura_waves', 'Premium', 'tarjeta'),
+('laura_waves', 'Premium', 'debito'),
 ('isabel_tune', 'Familiar', 'transferencia'),
-('rockero90', 'Premium', 'tarjeta'),
+('rockero90', 'Premium', 'debito'),
 ('poplover', 'Familiar', 'transferencia'),
-('jazzfan', 'Premium', 'transferencia'),
-('indiequeen', 'Familiar', 'tarjeta'),
-('laura_waves', 'Premium', 'tarjeta');
+('jazzfan', 'Premium', 'credito'),
+('indiequeen', 'Familiar', 'debito'),
+('laura_waves', 'Premium', 'transferencia');
 
--- 9. Reproducciones de usuarios (3 originales + 15 nuevas = 18 total)
 INSERT INTO reproducciones_usuarios (nombre_usuario, id_cancion) VALUES
 ('lucas123', 2),
 ('vale_rock', 1),
@@ -262,7 +253,6 @@ INSERT INTO reproducciones_usuarios (nombre_usuario, id_cancion) VALUES
 ('indiequeen', 25),
 ('indiequeen', 31),
 ('indiequeen', 40),
--- Reproducciones adicionales para usuarios existentes
 ('lucas123', 14),
 ('lucas123', 30),
 ('vale_rock', 27),
@@ -283,7 +273,6 @@ INSERT INTO reproducciones_usuarios (nombre_usuario, id_cancion) VALUES
 ('diego_rhythm', 34),
 ('isabel_tune', 25),
 ('isabel_tune', 39),
--- Más reproducciones variadas
 ('rockero90', 1),
 ('poplover', 2),
 ('urbanbeat', 3),
@@ -300,7 +289,6 @@ INSERT INTO reproducciones_usuarios (nombre_usuario, id_cancion) VALUES
 ('jazzfan', 14),
 ('indiequeen', 15);
 
--- 10. Artistas guardados (2 originales + 10 nuevas = 12 total)
 INSERT INTO artistas_guardados (nombre_usuario, nombre_artista) VALUES
 ('lucas123', 'B Eilish'),
 ('juanpop', 'Los Piojos'),
@@ -333,7 +321,6 @@ INSERT INTO artistas_guardados (nombre_usuario, nombre_artista) VALUES
 ('diego_rhythm', 'Nirvana'), 
 ('isabel_tune', 'Vetusta Morla');
 
--- 11. Canciones guardadas (2 originales + 10 nuevas = 12 total)
 INSERT INTO canciones_guardadas (nombre_usuario, id_cancion) VALUES
 ('vale_rock', 1),
 ('lucas123', 2),
@@ -378,7 +365,6 @@ INSERT INTO canciones_guardadas (nombre_usuario, id_cancion) VALUES
 ('isabel_tune', 25),
 ('isabel_tune', 31);
 
--- 12. Álbumes guardados (2 originales + 10 nuevas = 12 total)
 INSERT INTO albumes_guardados (nombre_usuario, id_album) VALUES
 ('vale_rock', 1),
 ('juanpop', 3),
@@ -393,22 +379,22 @@ INSERT INTO albumes_guardados (nombre_usuario, id_album) VALUES
 ('isabel_tune', 6),
 ('lucas123', 8),
 ('rockero90', 17),
-('rockero90', 19),  -- Metallica, Nirvana
+('rockero90', 19),  
 ('poplover', 12),
-('poplover', 13),    -- The Weeknd, Lana Del Rey
+('poplover', 13),   
 ('urbanbeat', 14),
-('urbanbeat', 7),   -- Bad Bunny, J Balvin
+('urbanbeat', 7),   
 ('jazzfan', 16),
-('jazzfan', 11),      -- Vetusta Morla, Gustavo Cerati
+('jazzfan', 11),    
 ('indiequeen', 6),
-('indiequeen', 9),  -- Arctic Monkeys, Tame Impala
+('indiequeen', 9),  
 ('lucas123', 11),
-('vale_rock', 13),   -- Gustavo Cerati, Lana Del Rey
+('vale_rock', 13),  
 ('juanpop', 20),
-('sofia_music', 18),  -- Shakira, Kali Uchis
+('sofia_music', 18),
 ('carlos_beat', 15),
-('ana_sound', 21),-- C. Tangana, Rosalía
+('ana_sound', 21),
 ('mario_jazz', 12),
-('laura_waves', 25),-- The Weeknd, B Eilish
+('laura_waves', 25),
 ('diego_rhythm', 19),
-('isabel_tune', 16); -- Nirvana, Vetusta Morla
+('isabel_tune', 16);

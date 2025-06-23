@@ -1,7 +1,7 @@
 CREATE SCHEMA aplicacion_musica; -- CREATE SCHEMA aplicacion_musica AUTHORIZATION postgres;
 SET search_path TO "aplicacion_musica";
 
-CREATE TYPE forma_pago_enum AS ENUM ('efectivo', 'tarjeta', 'transferencia');
+CREATE TYPE forma_pago_enum AS ENUM ('transferencia', 'debito', 'credito');
 CREATE TYPE genero_cancion_enum AS ENUM (
     'rock',
     'pop',

@@ -17,7 +17,7 @@ INSERT INTO usuarios (nombre_usuario, email, fecha_de_registro, nombre_plan) VAL
 ('mario_jazz', 'mario@gmail.com', '2025-05-21', 'Premium'),
 ('laura_waves', 'laura@outlook.com', '2025-06-12', 'Premium'),
 ('diego_rhythm', 'diego@yahoo.com', '2025-06-15', 'Gratuito'),
-('isabel_tune', 'isabel@gmail.com', '2025-06-20', 'Familiar');
+('isabel_tune', 'isabel@gmail.com', '2025-06-20', 'Familiar'),
 ('rockero90', 'rock90@gmail.com', '2025-02-10', 'Premium'),
 ('poplover', 'poplove@yahoo.com', '2025-03-18', 'Familiar'),
 ('urbanbeat', 'urban@outlook.com', '2025-04-22', 'Gratuito'),
@@ -33,7 +33,7 @@ INSERT INTO artistas (nombre_artista, tipo_artista, pais) VALUES
 ('Dua Lipa', 'solista', 'Reino Unido'),
 ('Arctic Monkeys', 'banda', 'Reino Unido'),
 ('J Balvin', 'solista', 'Colombia'),
-('Rosalía', 'solista', 'España');
+('Rosalía', 'solista', 'España'),
 ('Gustavo Cerati', 'solista', 'Argentina'),
 ('The Weeknd', 'solista', 'Canadá'),
 ('Lana Del Rey', 'solista', 'EEUU'),
@@ -59,7 +59,7 @@ INSERT INTO canciones (nombre_cancion, duracion_cancion, genero_cancion) VALUES
 ('Electric Feel', 236, 'rock psicodélico'),
 ('Ocean Eyes', 201, 'pop'),
 ('Mariposa', 195, 'pop latino'),
-('505', 258, 'indie rock');
+('505', 258, 'indie rock'),
 ('Deja Vu', 237, 'pop'),
 ('Blinding Lights', 200, 'pop'),
 ('Summertime Sadness', 265, 'pop'),
@@ -102,7 +102,7 @@ INSERT INTO albumes (nombre_artista, nombre_album, fecha_lanzamiento) VALUES
 ('J Balvin', 'Vibras', '2018-05-25'),
 ('Rosalía', 'El Mal Querer', '2018-11-02'),
 ('Tame Impala', 'Currents', '2015-07-17'),
-('B Eilish', 'Happier Than Ever', '2021-07-30');
+('B Eilish', 'Happier Than Ever', '2021-07-30'),
 ('Gustavo Cerati', 'Fuerza Natural', '2009-08-31'),
 ('The Weeknd', 'After Hours', '2020-03-20'),
 ('Lana Del Rey', 'Born to Die', '2012-01-27'),
@@ -117,7 +117,7 @@ INSERT INTO albumes (nombre_artista, nombre_album, fecha_lanzamiento) VALUES
 ('Arctic Monkeys', 'Favourite Worst Nightmare', '2007-04-23'),
 ('Dua Lipa', 'Dua Lipa', '2017-06-02'),
 ('Tame Impala', 'Lonerism', '2012-10-05'),
-('B Eilish', "Don't Smile at Me", '2017-08-11');
+('B Eilish', 'Dont Smile at Me', '2017-08-11');
 
 -- 6. Álbumes-Canciones (3 originales + 10 nuevas = 13 total)
 INSERT INTO albumes_canciones (id_cancion, id_album) VALUES
@@ -133,7 +133,7 @@ INSERT INTO albumes_canciones (id_cancion, id_album) VALUES
 (10, 9), -- Electric Feel -> Currents (Tame Impala)
 (11, 2), -- Ocean Eyes -> When We Sleep (B Eilish)
 (12, 5), -- Mariposa -> Future Nostalgia (Dua Lipa)
-(13, 6); -- 505 -> AM (Arctic Monkeys)
+(13, 6), -- 505 -> AM (Arctic Monkeys)
 (14, 11),
 (15, 12),
 (16, 13),
@@ -179,7 +179,7 @@ INSERT INTO canciones_artistas (id_cancion, nombre_artista) VALUES
 (10, 'Tame Impala'),
 (11, 'B Eilish'),
 (12, 'Dua Lipa'),
-(13, 'Arctic Monkeys');
+(13, 'Arctic Monkeys'),
 (14, 'Gustavo Cerati'),
 (15, 'The Weeknd'),
 (16, 'Lana Del Rey'), 
@@ -215,13 +215,13 @@ INSERT INTO canciones_artistas (id_cancion, nombre_artista) VALUES
 INSERT INTO pagos (nombre_usuario, nombre_plan, forma_pago) VALUES
 ('vale_rock', 'Premium', 'tarjeta'),
 ('juanpop', 'Familiar', 'transferencia'),
-('sofia_music', 'Premium', 'paypal'),
+('sofia_music', 'Premium', 'tarjeta'),
 ('ana_sound', 'Familiar', 'tarjeta'),
 ('mario_jazz', 'Premium', 'transferencia'),
 ('laura_waves', 'Premium', 'tarjeta'),
-('isabel_tune', 'Familiar', 'paypal');
+('isabel_tune', 'Familiar', 'transferencia'),
 ('rockero90', 'Premium', 'tarjeta'),
-('poplover', 'Familiar', 'paypal'),
+('poplover', 'Familiar', 'transferencia'),
 ('jazzfan', 'Premium', 'transferencia'),
 ('indiequeen', 'Familiar', 'tarjeta'),
 ('laura_waves', 'Premium', 'tarjeta');
@@ -246,7 +246,7 @@ INSERT INTO reproducciones_usuarios (nombre_usuario, id_cancion) VALUES
 ('mario_jazz', 13),
 ('mario_jazz', 4),
 ('laura_waves', 7),
-('laura_waves', 8);
+('laura_waves', 8),
 ('rockero90', 20),
 ('rockero90', 22),
 ('rockero90', 28),
@@ -313,7 +313,7 @@ INSERT INTO artistas_guardados (nombre_usuario, nombre_artista) VALUES
 ('laura_waves', 'B Eilish'),
 ('diego_rhythm', 'Los Piojos'),
 ('isabel_tune', 'Arctic Monkeys'),
-('lucas123', 'Rosalía');
+('lucas123', 'Rosalía'),
 ('rockero90', 'Metallica'), 
 ('rockero90', 'Nirvana'),
 ('poplover', 'The Weeknd'), 
@@ -329,9 +329,7 @@ INSERT INTO artistas_guardados (nombre_usuario, nombre_artista) VALUES
 ('juanpop', 'Shakira'), 
 ('sofia_music', 'Kali Uchis'),
 ('carlos_beat', 'C. Tangana'), 
-('ana_sound', 'Rosalía'),
 ('mario_jazz', 'The Weeknd'), 
-('laura_waves', 'B Eilish'),
 ('diego_rhythm', 'Nirvana'), 
 ('isabel_tune', 'Vetusta Morla');
 
@@ -348,7 +346,7 @@ INSERT INTO canciones_guardadas (nombre_usuario, id_cancion) VALUES
 ('laura_waves', 11),
 ('diego_rhythm', 3),
 ('isabel_tune', 13),
-('lucas123', 8);
+('lucas123', 8),
 ('rockero90', 20),
 ('rockero90', 22), 
 ('poplover', 15),
@@ -393,7 +391,7 @@ INSERT INTO albumes_guardados (nombre_usuario, id_album) VALUES
 ('laura_waves', 10),
 ('diego_rhythm', 3),
 ('isabel_tune', 6),
-('lucas123', 8);
+('lucas123', 8),
 ('rockero90', 17),
 ('rockero90', 19),  -- Metallica, Nirvana
 ('poplover', 12),

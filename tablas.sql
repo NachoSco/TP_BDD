@@ -149,7 +149,32 @@ CREATE TABLE IF NOT EXISTS albumes_guardados (
     ON UPDATE CASCADE
 );
 
--- 1) (Re)Crear la función, calificando también la tabla de planes
+-- Crear o reemplazar la funciÃ³n del trigger
+CREATE OR REPLACE FUNCTION aplicacion_musica.trg_check_nombre_plan()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- Verificar que el nombre_plan exista en la tabla de planes
+  IF NOT EXISTS (
+    SELECT 1
+    FROM aplicacion_musica.planes_subscripcion
+    WHERE nombre_plan = NEW.nombre_plan
+  ) THEN
+    RAISE EXCEPTION 'El plan "%" no existe en planes_subscripcion.', NEW.nombre_plan;
+  END IF;
+
+  RETURN NEW;
+END;
+$$;
+
+-- Crear el trigger sobre la tabla pagos
+CREATE TRIGGER trg_check_nombre_plan
+BEFORE INSERT OR UPDATE ON aplicacion_musica.pagos
+FOR EACH ROW
+EXECUTE FUNCTION aplicacion_musica.trg_check_nombre_plan();
+
+-- Funcion para verificar precio de plan
 CREATE OR REPLACE FUNCTION aplicacion_musica.trg_set_precio_plan()
 RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -161,9 +186,9 @@ BEGIN
   WHERE ap.nombre_plan = NEW.nombre_plan;
 
   RETURN NEW;
-END;
+END
+$$;
 
--- 3) Crear el trigger en el esquema correcto
 CREATE TRIGGER before_pagos_insert
   BEFORE INSERT OR UPDATE ON aplicacion_musica.pagos
   FOR EACH ROW
